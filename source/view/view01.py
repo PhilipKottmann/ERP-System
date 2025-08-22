@@ -2,44 +2,46 @@
 # Datum: 7.7.2025
 # Beschreibung: View-Klasse
 
+from tkinter import *
 import tkinter as tk # tkinter-GUI-Modul
 import re # regular expressions
 from tkinter import ttk # ttk-Widgets
+import ttkbootstrap as tb
 # Funktionalität Popup-Fenster
 from tkinter.messagebox import showinfo, showwarning, showerror
 
 
 class View(tk.Tk):
     def __init__(self, controller):
-        super().__init__()
+        # super().__init__()
 
-        # Aussenabstand allgemein
-        self.PAD = 7    
+        # # Aussenabstand allgemein
+        # self.PAD = 7    
         
-        # Konstante Fachbereiche
-        self.DEPARTMENTS = ["Vertrieb", "Disposition", "Bauteilmanagement"]
+        # # Konstante Fachbereiche
+        # self.DEPARTMENTS = ["Vertrieb", "Disposition", "Bauteilmanagement"]
 
-        # Definition der Laengen- und Breitenmasse des Hauptfensters:
-        self.WINDOW_SIZE_TOTAL_WIDTH = 1200
-        self.WINDOW_SIZE_TOTAL_HEIGHT = 800
-        self.FOOTER_HEIGHT = 30
-        self.main_view_height = self.WINDOW_SIZE_TOTAL_HEIGHT - self.FOOTER_HEIGHT
+        # # Definition der Laengen- und Breitenmasse des Hauptfensters:
+        # self.WINDOW_SIZE_TOTAL_WIDTH = 1200
+        # self.WINDOW_SIZE_TOTAL_HEIGHT = 800
+        # self.FOOTER_HEIGHT = 30
+        # self.main_view_height = self.WINDOW_SIZE_TOTAL_HEIGHT - self.FOOTER_HEIGHT
         
-        # Spaltenbreite
-        self.LEFT_COLUMN_WIDTH = 275
-        self.remaining_width_without_left_column = self.WINDOW_SIZE_TOTAL_WIDTH - self.LEFT_COLUMN_WIDTH
-        self.center_column_width = self.remaining_width_without_left_column/2
-        self.right_column_width = self.remaining_width_without_left_column/2
+        # # Spaltenbreite
+        # self.LEFT_COLUMN_WIDTH = 275
+        # self.remaining_width_without_left_column = self.WINDOW_SIZE_TOTAL_WIDTH - self.LEFT_COLUMN_WIDTH
+        # self.center_column_width = self.remaining_width_without_left_column/2
+        # self.right_column_width = self.remaining_width_without_left_column/2
 
-        # Breite der Frames
-        self.left_frame_width = self.LEFT_COLUMN_WIDTH - self.PAD
-        self.center_frame_width = self.center_column_width - self.PAD
-        self.right_frame_width = self.right_column_width - self.PAD
+        # # Breite der Frames
+        # self.left_frame_width = self.LEFT_COLUMN_WIDTH - self.PAD
+        # self.center_frame_width = self.center_column_width - self.PAD
+        # self.right_frame_width = self.right_column_width - self.PAD
 
-        # Klassenattribute
-        self.controller = controller
-        self.next_partnumber = 0
-        self.customer_data = []
+        # # Klassenattribute
+        # self.controller = controller
+        # self.next_partnumber = 0
+        # self.customer_data = []
 
         # Hauptfenster wird per Unter-Methode "zusammengebaut"
         self._create_main_window()
@@ -48,40 +50,40 @@ class View(tk.Tk):
     def main(self):
         self.mainloop()
 
-    def _create_main_window(self):
-        self.title("ERP-System v1.0")
-        self.geometry(str(self.WINDOW_SIZE_TOTAL_WIDTH)+"x"+str(self.WINDOW_SIZE_TOTAL_HEIGHT))
-        self.maxsize(self.WINDOW_SIZE_TOTAL_WIDTH, self.WINDOW_SIZE_TOTAL_HEIGHT)
-        self.resizable(0,0)
+    # def _create_main_window(self):
+    #     self.title("ERP-System v1.0")
+    #     self.geometry(str(self.WINDOW_SIZE_TOTAL_WIDTH)+"x"+str(self.WINDOW_SIZE_TOTAL_HEIGHT))
+    #     self.maxsize(self.WINDOW_SIZE_TOTAL_WIDTH, self.WINDOW_SIZE_TOTAL_HEIGHT)
+    #     self.resizable(0,0)
 
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=0)
-        self.grid_columnconfigure(0, weight=0)
-        self.grid_columnconfigure((1,2), weight=1)
-        self.grid_propagate(False)
+    #     self.grid_rowconfigure(0, weight=1)
+    #     self.grid_rowconfigure(1, weight=0)
+    #     self.grid_columnconfigure(0, weight=0)
+    #     self.grid_columnconfigure((1,2), weight=1)
+    #     self.grid_propagate(False)
     
-        self._create_left_frame()
-        self._create_center_frame()
-        self._create_right_frame()
-        self._create_footer_fame()
-        self.create_listview(0, "", "")
+    #     self._create_left_frame()
+    #     self._create_center_frame()
+    #     self._create_right_frame()
+    #     self._create_footer_fame()
+    #     self.create_listview(0, "", "")
 
-    def _create_left_frame(self):
-        self.left_frame = ttk.Frame(self, relief="groove", width=self.left_frame_width)
-        self.left_frame.grid(row=0, column=0, sticky="nesw", padx=self.PAD)
-        self._create_sections()
+    # def _create_left_frame(self):
+    #     self.left_frame = ttk.Frame(self, relief="groove", width=self.left_frame_width)
+    #     self.left_frame.grid(row=0, column=0, sticky="nesw", padx=self.PAD)
+    #     self._create_sections()
 
-    def _create_center_frame(self):
-        self.center_frame = ttk.Frame(self, relief="groove", width=self.center_frame_width)
-        self.center_frame.grid(row=0, column=1, sticky="nesw", padx=self.PAD)
+    # def _create_center_frame(self):
+    #     self.center_frame = ttk.Frame(self, relief="groove", width=self.center_frame_width)
+    #     self.center_frame.grid(row=0, column=1, sticky="nesw", padx=self.PAD)
 
-    def _create_right_frame(self):
-        self.right_frame = ttk.Frame(self, relief="groove", width=self.right_frame_width)
-        self.right_frame.grid(row=0, column=2, sticky="nesw", padx=self.PAD)
+    # def _create_right_frame(self):
+    #     self.right_frame = ttk.Frame(self, relief="groove", width=self.right_frame_width)
+    #     self.right_frame.grid(row=0, column=2, sticky="nesw", padx=self.PAD)
 
-    def _create_footer_fame(self):
-        self.footer_frame = ttk.Frame(self, relief="flat", padding=2)
-        self.footer_frame.grid(row=1, column=0, sticky="nsew")
+    # def _create_footer_fame(self):
+    #     self.footer_frame = ttk.Frame(self, relief="flat", padding=2)
+    #     self.footer_frame.grid(row=1, column=0, sticky="nsew")
         self._create_copyright()
         self._end_application()
 
@@ -129,133 +131,133 @@ class View(tk.Tk):
                     button = ttk.Button(section, text=f"Button {i+1}-{j+1}")
                 button.grid(row=j+1, column=0, sticky="EW", padx=self.PAD, pady=self.PAD)
 
-    def create_listview(self, content, heading, category):
-        self.content = content
-        category = category
+    # def create_listview(self, content, heading, category):
+    #     self.content = content
+    #     category = category
 
-        if self.content == 0:
-            self.listbox_label = ttk.Label(self.center_frame, text="Bitte Auswahl links treffen", font=("Segoe UI", 10, "bold"))
-        else:
-            self.listbox_label = ttk.Label(self.center_frame, text=(heading + " (Doppelklick für Details)"), font=("Segoe UI", 10, "bold"))
-        self.listbox_label.grid(row=0, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     if self.content == 0:
+    #         self.listbox_label = ttk.Label(self.center_frame, text="Bitte Auswahl links treffen", font=("Segoe UI", 10, "bold"))
+    #     else:
+    #         self.listbox_label = ttk.Label(self.center_frame, text=(heading + " (Doppelklick für Details)"), font=("Segoe UI", 10, "bold"))
+    #     self.listbox_label.grid(row=0, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
         
-        self.listbox = tk.Listbox(self.center_frame, relief="ridge")
-        self.listbox.config(font=("Courier", 10))
-        self.listbox.grid(row=1, column=0, sticky="EW", padx=self.PAD, pady=self.PAD)
+    #     self.listbox = tk.Listbox(self.center_frame, relief="ridge")
+    #     self.listbox.config(font=("Courier", 10))
+    #     self.listbox.grid(row=1, column=0, sticky="EW", padx=self.PAD, pady=self.PAD)
 
-        if self.content == 0:
-            self.listbox.insert(0, "")
-        else:
-            heading_listbox = f"S-Nr.|Bezeichnung | {category}" # "Überschrift" der Listview-Spalten
-            self.listbox.insert(0, heading_listbox)
+    #     if self.content == 0:
+    #         self.listbox.insert(0, "")
+    #     else:
+    #         heading_listbox = f"S-Nr.|Bezeichnung | {category}" # "Überschrift" der Listview-Spalten
+    #         self.listbox.insert(0, heading_listbox)
 
-            for item in self.content:
-                row = f"{item[1]}|{item[2]}|{item[3]}"
-                #self.listbox.insert(tk.END, item[1:])
-                self.listbox.insert(tk.END, row)
+    #         for item in self.content:
+    #             row = f"{item[1]}|{item[2]}|{item[3]}"
+    #             #self.listbox.insert(tk.END, item[1:])
+    #             self.listbox.insert(tk.END, row)
 
-        self.listbox.bind('<Double-Button-1>', self.get_cursor_title_double)
-        # self.listbox.bind("<<ListboxSelect>>", self.get_cursor_title_single)
+    #     self.listbox.bind('<Double-Button-1>', self.get_cursor_title_double)
+    #     # self.listbox.bind("<<ListboxSelect>>", self.get_cursor_title_single)
 
-    # Auslesen des Zeilenindex bei Doppelklick
-    def get_cursor_title_double(self, event):
-        selection = self.listbox.curselection()
-        if selection:
-            index = selection[0]-1
-            if index < 0:
-                return
-            else:
-                partnumber = self.content[index]
-                if isinstance(partnumber, str):
-                    self.show_message_box("Auswahl", "Bitte Auswahl unten treffen")
-                    return
+    # # Auslesen des Zeilenindex bei Doppelklick
+    # def get_cursor_title_double(self, event):
+    #     selection = self.listbox.curselection()
+    #     if selection:
+    #         index = selection[0]-1
+    #         if index < 0:
+    #             return
+    #         else:
+    #             partnumber = self.content[index]
+    #             if isinstance(partnumber, str):
+    #                 self.show_message_box("Auswahl", "Bitte Auswahl unten treffen")
+    #                 return
 
-                else:
-                    self.show_context_partnumbers(partnumber)
+    #             else:
+    #                 self.show_context_partnumbers(partnumber)
 
-    # Auslesen des Zeilenindex bei einfachem Klick ("Markieren")
-    def get_cursor_title_single(self, event):
-        selection = self.listbox.curselection()
-        if selection:
-            index = selection[0]-1
-            if index < 0:
-                return
-            else:
-                partnumber = self.content[index]
-                if isinstance(partnumber, str):
-                    self.show_message_box("Auswahl", "Bitte Auswahl unten treffen")
-                    return
+    # # Auslesen des Zeilenindex bei einfachem Klick ("Markieren")
+    # def get_cursor_title_single(self, event):
+    #     selection = self.listbox.curselection()
+    #     if selection:
+    #         index = selection[0]-1
+    #         if index < 0:
+    #             return
+    #         else:
+    #             partnumber = self.content[index]
+    #             if isinstance(partnumber, str):
+    #                 self.show_message_box("Auswahl", "Bitte Auswahl unten treffen")
+    #                 return
 
-                else:
-                    self.show_context_partnumbers(partnumber)
+    #             else:
+    #                 self.show_context_partnumbers(partnumber)
 
     # Anzeige der Stammdaten der Sachnummer im rechten Frame
-    def show_context_partnumbers(self, partnumber):
-        self.result = self.controller.read_context_partnumber(partnumber[0])
+    # def show_context_partnumbers(self, partnumber):
+    #     self.result = self.controller.read_context_partnumber(partnumber[0])
 
-        self.lbl_heading = ttk.Label(self.right_frame, text="Detailansicht", font=("Segoe UI", 10, "bold"))
-        self.lbl_heading.grid(row=0, column=0, columnspan=2, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_heading = ttk.Label(self.right_frame, text="Detailansicht", font=("Segoe UI", 10, "bold"))
+    #     self.lbl_heading.grid(row=0, column=0, columnspan=2, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
 
-        self.lbl_partnumber_heading = ttk.Label(self.right_frame, text="Sachnummer: ", font=("Segoe UI", 10))
-        self.lbl_partnumber_heading.grid(row=1, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
-        self.lbl_partnumber = ttk.Label(self.right_frame, text=self.result[0][1], font=("Segoe UI", 10, "bold"))
-        self.lbl_partnumber.grid(row=1, column=1, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_partnumber_heading = ttk.Label(self.right_frame, text="Sachnummer: ", font=("Segoe UI", 10))
+    #     self.lbl_partnumber_heading.grid(row=1, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_partnumber = ttk.Label(self.right_frame, text=self.result[0][1], font=("Segoe UI", 10, "bold"))
+    #     self.lbl_partnumber.grid(row=1, column=1, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
 
-        self.lbl_description_heading = ttk.Label(self.right_frame, text="Benennung: ", font=("Segoe UI", 10))
-        self.lbl_description_heading.grid(row=2, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
-        self.lbl_description = ttk.Label(self.right_frame, text=self.result[0][2], font=("Segoe UI", 10, "bold"))
-        self.lbl_description.grid(row=2, column=1, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_description_heading = ttk.Label(self.right_frame, text="Benennung: ", font=("Segoe UI", 10))
+    #     self.lbl_description_heading.grid(row=2, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_description = ttk.Label(self.right_frame, text=self.result[0][2], font=("Segoe UI", 10, "bold"))
+    #     self.lbl_description.grid(row=2, column=1, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
 
-        self.lbl_build_condition_heading = ttk.Label(self.right_frame, text="Aufbauzustand: ", font=("Segoe UI", 10))
-        self.lbl_build_condition_heading.grid(row=3, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
-        self.lbl_build_condition = ttk.Label(self.right_frame, text=self.result[0][3], font=("Segoe UI", 10, "bold"))
-        self.lbl_build_condition.grid(row=3, column=1, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_build_condition_heading = ttk.Label(self.right_frame, text="Aufbauzustand: ", font=("Segoe UI", 10))
+    #     self.lbl_build_condition_heading.grid(row=3, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_build_condition = ttk.Label(self.right_frame, text=self.result[0][3], font=("Segoe UI", 10, "bold"))
+    #     self.lbl_build_condition.grid(row=3, column=1, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
 
-        self.lbl_value_heading = ttk.Label(self.right_frame, text="Warenwert [€]: ", font=("Segoe UI", 10))
-        self.lbl_value_heading.grid(row=4, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
-        self.lbl_value = ttk.Label(self.right_frame, text=self.result[0][5], font=("Segoe UI", 10, "bold"))
-        self.lbl_value.grid(row=4, column=1, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_value_heading = ttk.Label(self.right_frame, text="Warenwert [€]: ", font=("Segoe UI", 10))
+    #     self.lbl_value_heading.grid(row=4, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_value = ttk.Label(self.right_frame, text=self.result[0][5], font=("Segoe UI", 10, "bold"))
+    #     self.lbl_value.grid(row=4, column=1, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
 
-        self.lbl_stock_heading = ttk.Label(self.right_frame, text="Lagerbestand [Stk.]: ", font=("Segoe UI", 10))
-        self.lbl_stock_heading.grid(row=5, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
-        self.lbl_stock = ttk.Label(self.right_frame, text=self.result[0][9], font=("Segoe UI", 10, "bold"))
-        self.lbl_stock.grid(row=5, column=1, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_stock_heading = ttk.Label(self.right_frame, text="Lagerbestand [Stk.]: ", font=("Segoe UI", 10))
+    #     self.lbl_stock_heading.grid(row=5, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_stock = ttk.Label(self.right_frame, text=self.result[0][9], font=("Segoe UI", 10, "bold"))
+    #     self.lbl_stock.grid(row=5, column=1, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
 
-        self.lbl_replacement_time_heading = ttk.Label(self.right_frame, text="Wiederbeschaffungszeit [KW]: ", font=("Segoe UI", 10))
-        self.lbl_replacement_time_heading.grid(row=6, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
-        self.lbl_replacement_time = ttk.Label(self.right_frame, text=self.result[0][6], font=("Segoe UI", 10, "bold"))
-        self.lbl_replacement_time.grid(row=6, column=1, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_replacement_time_heading = ttk.Label(self.right_frame, text="Wiederbeschaffungszeit [KW]: ", font=("Segoe UI", 10))
+    #     self.lbl_replacement_time_heading.grid(row=6, column=0, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
+    #     self.lbl_replacement_time = ttk.Label(self.right_frame, text=self.result[0][6], font=("Segoe UI", 10, "bold"))
+    #     self.lbl_replacement_time.grid(row=6, column=1, sticky="EW", padx=self.PAD, pady=(self.PAD * 2))
 
     # Popup um Stammdaten zu ändern
-    def modify_partnumber_popup(self):
-        pop_up_win = tk.Toplevel()
-        pop_up_win.title("Stammdaten")
-        pop_up_win.geometry("250x150")
-        pop_up_win.resizable(0,0)
-        label = tk.Label(pop_up_win, text="Stammdaten modifizieren")
-        label.grid(row=0, column=0, columnspan=2, sticky="W", padx=self.PAD, pady=self.PAD)
+    # def modify_partnumber_popup(self):
+    #     pop_up_win = tk.Toplevel()
+    #     pop_up_win.title("Stammdaten")
+    #     pop_up_win.geometry("250x150")
+    #     pop_up_win.resizable(0,0)
+    #     label = tk.Label(pop_up_win, text="Stammdaten modifizieren")
+    #     label.grid(row=0, column=0, columnspan=2, sticky="W", padx=self.PAD, pady=self.PAD)
 
-        self.next_partnumber = self.controller.get_next_partnumber()
-        lbl_partnumber = tk.Label(pop_up_win, text="Sachnummer: ", )
-        lbl_partnumber.grid(row=1, column=0, sticky="W", padx=self.PAD, pady=self.PAD)
-        partnumber = tk.Label(pop_up_win, text=str(self.next_partnumber))
-        partnumber.grid(row=1, column=1, sticky="W", padx=self.PAD, pady=self.PAD)
+    #     self.next_partnumber = self.controller.get_next_partnumber()
+    #     lbl_partnumber = tk.Label(pop_up_win, text="Sachnummer: ", )
+    #     lbl_partnumber.grid(row=1, column=0, sticky="W", padx=self.PAD, pady=self.PAD)
+    #     partnumber = tk.Label(pop_up_win, text=str(self.next_partnumber))
+    #     partnumber.grid(row=1, column=1, sticky="W", padx=self.PAD, pady=self.PAD)
 
-        button_close = tk.Button(pop_up_win, text="Abbrechen", command=pop_up_win.destroy)
-        button_close.grid(row=2, column=0, sticky="EW", padx=self.PAD, pady=self.PAD)
+    #     button_close = tk.Button(pop_up_win, text="Abbrechen", command=pop_up_win.destroy)
+    #     button_close.grid(row=2, column=0, sticky="EW", padx=self.PAD, pady=self.PAD)
         
-        button_change = tk.Button(pop_up_win, text="Ändern", command=pop_up_win.destroy)
-        button_change.grid(row=2, column=1, sticky="EW", padx=self.PAD, pady=self.PAD)
+    #     button_change = tk.Button(pop_up_win, text="Ändern", command=pop_up_win.destroy)
+    #     button_change.grid(row=2, column=1, sticky="EW", padx=self.PAD, pady=self.PAD)
 
     # Popup um Kundendaten einzutragen
     def add_customer_popup(self):
-        self.company_name = tk.StringVar
-        self.company_street = tk.StringVar
-        self.company_number = tk.IntVar
-        self.company_zip = tk.IntVar
-        self.company_city = tk.StringVar
-        self.company_phone = tk.StringVar
-        self.company_email = tk.StringVar
+        self.company_name = tk.StringVar()
+        self.company_street = tk.StringVar()
+        self.company_number = tk.IntVar()
+        self.company_zip = tk.IntVar()
+        self.company_city = tk.StringVar()
+        self.company_phone = tk.StringVar()
+        self.company_email = tk.StringVar()
 
         self.pop_up_win = tk.Toplevel()
         self.pop_up_win.title("Kunde anlegen")

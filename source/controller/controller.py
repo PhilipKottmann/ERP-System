@@ -2,22 +2,24 @@
 # Datum: 7.7.2025
 # Beschreibung: Controller-Klasse
 
-from model import Model # Import Model-Klasse
-from view import View # Import View-Klasse
+from ..model.base_model import BaseModel # Import BaseModel-Klasse
+from ..model.part_model import PartModel # Import PartModel-Klasse
+from ..model.model import Model # Import Model-Klasse
+from ..view.view import View # Import View-Klasse
+from ..model.db import get_connection
+from ..model.customer_model import CustomerModel
 
 class Controller:
     def __init__(self):
-        self.model = Model()
+        self.model = BaseModel()
+        self.customer_model = CustomerModel()
         self.view = View(self)
         self.next_partnumber = 0
         self.current_partnumber = 0
         self.current_quantity = 0
 
-    def main(self):
-        self.view.main()
-
     def add_customer(self, customer_data):
-        self.model.add_customer(customer_data)
+        self.customer_model.add_customer(customer_data)
         return True
 
     def confirm_delivery(self):
@@ -49,10 +51,6 @@ class Controller:
     def show_stock(self):
         self.result = self.model.read_stock()
         self.view.create_listview(self.result, "Lagerbestände", "Best.")
-        
-    def add_partnumber(self, partnumber_data):
-        self.model.add_partnumber(partnumber_data)
-        return True
 
     def modify_bom(self):
         self.view.clear_right_frame_for_refresh()
@@ -91,7 +89,7 @@ class Controller:
         return zaehler / nenner
         
 
-# Aufruf der main()-Methode, sobald das Programm aus controller.py aufgerufen wird
-if __name__ == "__main__":
-    erp_system = Controller()
-    erp_system.main()
+# # Aufruf der main()-Methode, sobald das Programm aus controller.py aufgerufen wird
+# if __name__ == "__main__":
+#     erp_system = Controller()
+#     erp_system.main()

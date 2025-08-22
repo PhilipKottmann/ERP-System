@@ -3,75 +3,22 @@
 # Beschreibung: Model-Klasse
 
 import sqlite3 # Datenbank-Modul
+# from model.part_model import Part
+from .part_model import PartModel
+from .db import get_connection
 
 class Model:
-    def __init__(self):
-        with sqlite3.connect("erp_system.db") as self.connection:
-            self.connection.execute("PRAGMA foreign_keys = ON")
-            self.connection.commit()
-            self.cursor = self.connection.cursor()
+    # def __init__(self):
+        # with sqlite3.connect("erp_system.db") as self.connection:
+        #     self.connection.execute("PRAGMA foreign_keys = ON")
+        #     self.connection.commit()
+        #     self.cursor = self.connection.cursor()
+    #     self.connection = get_connection()
+    #     self.cursor = self.connection.cursor()
         
-        # Tabelle "Sachnummern"
-        self._create_table("""CREATE TABLE IF NOT EXISTS sachnummern 
-                           (sNrID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                           materialnummer INTEGER, 
-                           bezeichnung TEXT,
-                           kennungAufbauzustand TEXT, 
-                           stueckliste INTEGER, 
-                           warenwert INTEGER, 
-                           wiederbeschaffungszeit INTEGER)""")
-        
-        # Tabelle "Bestände"
-        self._create_table("""CREATE TABLE IF NOT EXISTS bestaende 
-                           (bestID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                           sNrID INTEGER NOT NULL,
-                           anzahl INTEGER NOT NULL,
-                            FOREIGN KEY (sNrID)
-                                REFERENCES sachnummern (sNrID))""")
-        
-        # Tabelle "Kunden"
-        self._create_table("""CREATE TABLE IF NOT EXISTS kunden 
-                           (kundID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                           firmenname TEXT,
-                           strasse TEXT,
-                           hausnummer INTEGER,
-                           plz INTEGER,
-                           ortsname TEXT,
-                           telefon TEXT,
-                           email TEXT)""")
-        
-        # Tabelle "Lieferscheine"
-        self._create_table("""CREATE TABLE IF NOT EXISTS lieferscheine 
-                           (lieferID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                           versanddatum TEXT)""")
-        
-        # Tabelle "Auftraege"
-        self._create_table("""CREATE TABLE IF NOT EXISTS auftraege 
-                           (aufID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                           auftragseingang TEXT,
-                           auftragsabschluss TEXT,
-                           kundID INTEGER,
-                           lieferID INTEGER,
-                            FOREIGN KEY (kundID)
-                                REFERENCES kunden (kundID),
-                            FOREIGN KEY (lieferID)
-                                REFERENCES lieferscheine (lieferID))""")
-        
-        # Tabelle "Auftragspositionen"
-        self._create_table("""CREATE TABLE IF NOT EXISTS auftragspositionen 
-                           (auftrPosID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                           aufID INTEGER,
-                           sNrID INTEGER,
-                           anzahl INTEGER,
-                            FOREIGN KEY (aufID)
-                                REFERENCES auftraege (aufID),
-                            FOREIGN KEY (sNrID)
-                                REFERENCES sachnummern (sNrID))""")
-        
-
-    def _create_table(self, sql):
-        self.cursor.execute(sql)
-        self.connection.commit()
+    # def _create_table(self, sql):
+    #     self.cursor.execute(sql)
+    #     self.connection.commit()
 
     def read_database(self):
         self.cursor.execute("SELECT * FROM sachnummern ORDER BY materialnummer ASC")
@@ -111,11 +58,11 @@ class Model:
         id_to_add = self.read_highest_ID_from_sachnummern()
         return (basic_number + id_to_add + 1)
 
-    def add_customer(self, customer_data):
-        self.customer = customer_data
-        sql = "INSERT INTO kunden (firmenname, strasse, hausnummer, plz, ortsname, telefon, email) VALUES (?,?,?,?,?,?,?)"
-        self.cursor.execute(sql, self.customer)
-        self.connection.commit()
+    # def add_customer(self, customer_data):
+    #     self.customer = customer_data
+    #     sql = "INSERT INTO kunden (firmenname, strasse, hausnummer, plz, ortsname, telefon, email) VALUES (?,?,?,?,?,?,?)"
+    #     self.cursor.execute(sql, self.customer)
+    #     self.connection.commit()
 
     def add_partnumber(self, partnumber_data):
         self.partnumber_data = partnumber_data
