@@ -7,6 +7,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# SQLite
+.db
+*.db
+
 # C extensions
 *.so
 

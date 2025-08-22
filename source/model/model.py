@@ -47,11 +47,11 @@ class Model:
     def read_shortages(self):
         pass
 
-    def read_stock(self):
-        # self.cursor.execute(f"SELECT sachnummern.sNrID, sachnummern.materialnummer, sachnummern.bezeichnung, bestaende.anzahl FROM (sachnummern, bestaende) WHERE sachnummern.sNrID = bestaende.sNrID")
-        self.cursor.execute(f"SELECT sachnummern.sNrID, sachnummern.materialnummer, sachnummern.bezeichnung, bestaende.anzahl FROM (sachnummern, bestaende) WHERE sachnummern.sNrID = bestaende.sNrID")
-        self.result = self.cursor.fetchall()
-        return self.result
+    # def read_stock(self):
+    #     # self.cursor.execute(f"SELECT sachnummern.sNrID, sachnummern.materialnummer, sachnummern.bezeichnung, bestaende.anzahl FROM (sachnummern, bestaende) WHERE sachnummern.sNrID = bestaende.sNrID")
+    #     self.cursor.execute(f"SELECT sachnummern.sNrID, sachnummern.materialnummer, sachnummern.bezeichnung, bestaende.anzahl FROM (sachnummern, bestaende) WHERE sachnummern.sNrID = bestaende.sNrID")
+    #     self.result = self.cursor.fetchall()
+    #     return self.result
         
     def calculate_partnumber(self):
         basic_number = 10000    # Start der Materialnummernvergabe bei 10000
@@ -64,15 +64,15 @@ class Model:
     #     self.cursor.execute(sql, self.customer)
     #     self.connection.commit()
 
-    def add_partnumber(self, partnumber_data):
-        self.partnumber_data = partnumber_data
-        sql = "INSERT INTO sachnummern (materialnummer, bezeichnung, kennungAufbauzustand, stueckliste, warenwert, wiederbeschaffungszeit) VALUES (?,?,?,?,?,?)"
-        self.cursor.execute(sql, self.partnumber_data)
-        self.connection.commit()
-        self.last_id = self.cursor.lastrowid
-        sql = "INSERT INTO bestaende (sNrID, anzahl) VALUES (?,?)"
-        self.cursor.execute(sql, [self.last_id, "0"])
-        self.connection.commit()
+    # def add_partnumber(self, partnumber_data):
+    #     self.partnumber_data = partnumber_data
+    #     sql = "INSERT INTO sachnummern (materialnummer, bezeichnung, kennungAufbauzustand, stueckliste, warenwert, wiederbeschaffungszeit) VALUES (?,?,?,?,?,?)"
+    #     self.cursor.execute(sql, self.partnumber_data)
+    #     self.connection.commit()
+    #     self.last_id = self.cursor.lastrowid
+    #     sql = "INSERT INTO bestaende (sNrID, anzahl) VALUES (?,?)"
+    #     self.cursor.execute(sql, [self.last_id, "0"])
+    #     self.connection.commit()
 
     def get_current_quantity(self, partnumber):
         sql = f"SELECT anzahl FROM bestaende WHERE bestaende.sNrID = {partnumber}"

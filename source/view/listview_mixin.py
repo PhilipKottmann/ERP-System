@@ -21,7 +21,7 @@ class ListViewMixin:
 
         scrollbar = ttk.Scrollbar(self.list_frame, orient="vertical", command=self.listbox.yview)
         scrollbar.grid(row=1, column=1, sticky="ns")
-        self.listbox.config(yscrollcommand=scrollbar.set)
+        self.listbox.config(yscrollcommand=scrollbar.set, width=40)
 
         # Grid-Konfiguration für responsives Verhalten
         self.list_frame.rowconfigure(1, weight=1)
@@ -32,3 +32,7 @@ class ListViewMixin:
         self.listbox.delete(0, "end")
         for item in items:
             self.listbox.insert("end", item)
+
+        # Dynamische Breite setzen (mindestens 20 Zeichen)
+        maxlen = max((len(str(item)) for item in items), default=20)
+        self.listbox.config(width=max(20, maxlen))

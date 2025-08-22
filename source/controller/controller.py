@@ -2,17 +2,19 @@
 # Datum: 7.7.2025
 # Beschreibung: Controller-Klasse
 
-from ..model.base_model import BaseModel # Import BaseModel-Klasse
-from ..model.part_model import PartModel # Import PartModel-Klasse
-from ..model.model import Model # Import Model-Klasse
-from ..view.view import View # Import View-Klasse
+from ..model.base_model import BaseModel 
+from ..model.part_model import PartModel 
+from ..model.model import Model
+from ..view.view import View 
 from ..model.db import get_connection
 from ..model.customer_model import CustomerModel
+from ..model.stock_model import StockModel 
 
 class Controller:
     def __init__(self):
         self.model = BaseModel()
         self.customer_model = CustomerModel()
+        self.stock_model = StockModel()
         self.view = View(self)
         self.next_partnumber = 0
         self.current_partnumber = 0

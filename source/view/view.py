@@ -29,6 +29,20 @@ class View(Baseview, LayoutMixin, SectionMixin, ListViewMixin):
     def add_partnumber_popup(self):
         PartFormView(self, self.controller)
 
+    # Bestaende anzeigen
+    def show_stock(self):
+        stock = self.controller.stock_model.get_all_stock()
+        heading = "Sachnummer | Bezeichnung | Bestand"
+        items = [heading] + [
+            f"{row['materialnummer']} | {row['bezeichnung']} | {row['bestand']}"
+            for row in stock
+        ]
+
+        self.update_listview(items, title="Lagerbestände")
+
+    def add_quantity(self):
+        pass
+
     # Auslesen des Zeilenindex bei Doppelklick
     def get_cursor_title_double(self, event):
         selection = self.listbox.curselection()

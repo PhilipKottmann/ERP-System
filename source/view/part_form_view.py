@@ -16,9 +16,9 @@ class PartFormView(tk.Toplevel):
         self.next_number = self.part_model.get_next_partnumber()
 
         self.pad = pad
-        
+
         self.title("Sachnummer anlegen")
-        self.geometry("380x310")
+        self.geometry("380x350")
         self.resizable(0, 0)
 
         self.vars = {
@@ -34,22 +34,22 @@ class PartFormView(tk.Toplevel):
     def _create_widgets(self, number):
         ttk.Label(self, text="Neue Sachnummer anlegen").grid(row=0, column=0, columnspan=2, sticky="w", padx=self.pad, pady=self.pad)
 
-        ttk.Label(self, text="Sachnummer:").grid(row=1, column=0, sticky="w", padx=self.pad)
+        ttk.Label(self, text="Sachnummer:").grid(row=1, column=0, sticky="w", padx=self.pad, pady=self.pad)
         ttk.Label(self, text=f"{number} (autom. generiert)").grid(row=1, column=1, sticky="ew")
 
-        ttk.Label(self, text="Bezeichnung:").grid(row=2, column=0, sticky="w", padx=self.pad)
+        ttk.Label(self, text="Bezeichnung:").grid(row=2, column=0, sticky="w", padx=self.pad, pady=self.pad)
         ttk.Entry(self, textvariable=self.vars["description"]).grid(row=2, column=1, sticky="ew")
 
-        ttk.Label(self, text="Aufbau:").grid(row=3, column=0, sticky="w", padx=self.pad)
+        ttk.Label(self, text="Aufbau:").grid(row=3, column=0, sticky="w", padx=self.pad, pady=self.pad)
         ttk.Combobox(self, textvariable=self.vars["build_up"], values=["Einzelteil", "Fertigteil"]).grid(row=3, column=1, sticky="ew")
 
-        ttk.Label(self, text="Stückliste:").grid(row=4, column=0, sticky="w", padx=self.pad)
+        ttk.Label(self, text="Stückliste:").grid(row=4, column=0, sticky="w", padx=self.pad, pady=self.pad)
         ttk.Combobox(self, textvariable=self.vars["bom"], values=["Ja", "Nein"]).grid(row=4, column=1, sticky="ew")
 
-        ttk.Label(self, text="Warenwert [€]:").grid(row=5, column=0, sticky="w", padx=self.pad)
+        ttk.Label(self, text="Warenwert [€]:").grid(row=5, column=0, sticky="w", padx=self.pad, pady=self.pad)
         ttk.Entry(self, textvariable=self.vars["price"]).grid(row=5, column=1, sticky="ew")
 
-        ttk.Label(self, text="Beschaffungszeit [KW]:").grid(row=6, column=0, sticky="w", padx=self.pad)
+        ttk.Label(self, text="Beschaffungszeit [KW]:").grid(row=6, column=0, sticky="w", padx=self.pad, pady=self.pad)
         ttk.Entry(self, textvariable=self.vars["sourcing_time"]).grid(row=6, column=1, sticky="ew")
 
         ttk.Button(self, text="Eintragen", command=lambda: self._submit(number)).grid(row=7, column=0, padx=self.pad, pady=self.pad)
